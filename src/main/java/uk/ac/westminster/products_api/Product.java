@@ -19,6 +19,7 @@ public class Product {
     //Tutorial 2: Product encapsulated with private fields and getters
 
     public Long getId() { return id; }
+    //Tutorial 2: verified getter removal drops the field from JSON
     public String getName() { return name; }
     public double getPrice() { return price; }
 }
