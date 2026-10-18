@@ -29,4 +29,10 @@ public class Productcontroller {
         return productService.addProduct(product);
     }
 
+    // Tutorial 3 - Activity 4 (Task 13)
+    @DeleteMapping("/products/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+    }
+
 }

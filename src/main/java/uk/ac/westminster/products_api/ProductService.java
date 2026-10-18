@@ -31,4 +31,9 @@ public class ProductService {
                 .filter(p -> p.getId().equals(id))
                 .findFirst();
     }
+
+    // Tutorial 3 - Activity 4 (Task 12)
+    public void deleteProduct(Long id) {
+        products.removeIf(p -> p.getId().equals(id));
+    }
 }
