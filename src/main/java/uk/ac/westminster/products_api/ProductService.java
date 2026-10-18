@@ -36,4 +36,11 @@ public class ProductService {
     public void deleteProduct(Long id) {
         products.removeIf(p -> p.getId().equals(id));
     }
+
+    // Tutorial 3 - Activity 5 (Task 16)
+    public List<Product> findByName(String name) {
+        return products.stream()
+                .filter(p -> p.getName().contains(name))
+                .toList();
+    }
 }
