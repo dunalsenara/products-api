@@ -24,4 +24,11 @@ public class ProductService {
         products.add(product);
         return product;
     }
+
+    // Tutorial 3 - Activity 3 (Task 8)
+    public Optional<Product> getProductById(Long id) {
+        return products.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst();
+    }
 }
