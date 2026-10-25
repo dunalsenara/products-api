@@ -14,6 +14,17 @@ public class ProductService {
     private List<Product> products = new ArrayList<>();
     private Long nextId = 1L;
 
+    // Tutorial 4 - Activity 3 (Task 10)
+    public ProductService() {
+        products.add(new DigitalProduct(
+                nextId++, "Clean Code (E-book)", 29.99,
+                "/downloads/clean-code.pdf", 4.2));
+
+        products.add(new PhysicalProduct(
+                nextId++, "27-inch Monitor", 249.99,
+                5.4, "61cm x 41cm x 18cm"));
+    }
+
     // Tutorial 3 - Activity 1 (Task 4): getAllProducts and addProduct
     public List<Product> getAllProducts() {
         return products;
