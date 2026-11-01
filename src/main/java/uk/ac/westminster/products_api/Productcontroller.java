@@ -35,7 +35,13 @@ public class Productcontroller {
         productService.deleteProduct(id);
     }
 
-    // Tutorial 3 - Activity 5 (Task 17)
+    // Tutorial 5 - Activity 5 (Task 18)
+    @GetMapping("/products/summaries")
+    public List<String> getSummaries() {
+        return productService.getAllSummaries();
+    }
+
+        // Tutorial 3 - Activity 5 (Task 17)
     @GetMapping("/products/search")
     public List<Product> search(@RequestParam String name) {
         return productService.findByName(name);

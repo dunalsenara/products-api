@@ -1,6 +1,6 @@
 package uk.ac.westminster.products_api;
 
-public class Product {
+public abstract class Product {
 
     //Tutorial 2: Product encapsulated with private fields and getters
 
@@ -15,6 +15,8 @@ public class Product {
         this.name = name;
         this.price = price;
     }
+
+    public abstract String getSummary();
 
     //Tutorial 2: Product encapsulated with private fields and getters
 

@@ -7,10 +7,12 @@
 package uk.ac.westminster.products_api;
 
 // Tutorial 4 - Activity 2 (Task 7)
-public class PhysicalProduct extends Product {
+public class PhysicalProduct extends Product implements Discountable {
 
     private double weightKg;
     private String dimensions;
+
+    private double discountedPrice;
 
     // Tutorial 4 - Activity 2 (Task 8)
     public PhysicalProduct() {
@@ -20,6 +22,13 @@ public class PhysicalProduct extends Product {
         super(id, name, price);
         this.weightKg = weightKg;
         this.dimensions = dimensions;
+        applyDiscount (0.5);
+    }
+
+    // Tutorial 5 - Activity 2 (Task 7)
+    @Override
+    public String getSummary() {
+        return "Physical: " + getName() + " | Weight: " + weightKg + "kg";
     }
 
     public double getWeightKg() {
@@ -28,6 +37,19 @@ public class PhysicalProduct extends Product {
 
     public String getDimensions() {
         return dimensions;
+    }
+
+    // Tutorial 5 - Activity 4 (Task 15)
+    @Override
+    public void applyDiscount(double rate) {
+        double capped = Math.min(rate, 0.20);
+        this.discountedPrice = getPrice() * (1 - capped);
+    }
+
+    // Tutorial 5 - Activity 4 (Task 15)
+    @Override
+    public double getDiscountedPrice() {
+        return discountedPrice;
     }
 
 }

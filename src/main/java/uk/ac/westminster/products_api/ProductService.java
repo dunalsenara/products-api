@@ -54,4 +54,18 @@ public class ProductService {
                 .filter(p -> p.getName().contains(name))
                 .toList();
     }
+    // Tutorial 5 - Activity 5 (Task 17)
+    public List<String> getAllSummaries() {
+        List<String> summaries = new ArrayList<>();
+        for (Product p : products) {
+            summaries.add(p.getSummary());
+            
+            if (p instanceof Discountable d) {
+                d.applyDiscount(0.10);
+            }
+
+        }
+        return summaries;
+    }
+
 }
