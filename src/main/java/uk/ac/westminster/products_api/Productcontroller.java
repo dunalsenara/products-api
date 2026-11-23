@@ -22,9 +22,10 @@ public class Productcontroller {
     }
 
     // Tutorial 3 - Activity 3 (Task 9)
+    //Tutorial 7: the service now throws ProductNotFoundException -> 404.
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable Long id) {
-        return productService.getProductById(id).orElse(null);
+        return productService.getProductById(id);
     }
 
     // Tutorial 3 - Activity 3 (Task 10)
@@ -45,7 +46,7 @@ public class Productcontroller {
         return productService.getAllSummaries();
     }
 
-        // Tutorial 3 - Activity 5 (Task 17)
+    // Tutorial 3 - Activity 5 (Task 17)
     @GetMapping("/products/search")
     public List<Product> search(@RequestParam String name) {
         return productService.findByName(name);

@@ -1,71 +1,62 @@
 package uk.ac.westminster.products_api;
 
 import org.springframework.stereotype.Service;
+import uk.ac.westminster.products_api.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 // Tutorial 3 - Activity 1 (Task 2): ProductService class marked with @Service.
 @Service
 public class ProductService {
 
-    // Tutorial 3 - Activity 1 (Task 3): the two private fields.
-    private List<Product> products = new ArrayList<>();
-    private Long nextId = 1L;
+    // Tutorial 7 - Activity 4 (Task 15)
+    private final ProductRepository repository;
 
-    // Tutorial 4 - Activity 3 (Task 10)
-    public ProductService() {
-        products.add(new DigitalProduct(
-                nextId++, "Clean Code (E-book)", 29.99,
-                "/downloads/clean-code.pdf", 4.2));
-
-        products.add(new PhysicalProduct(
-                nextId++, "27-inch Monitor", 249.99,
-                5.4, "61cm x 41cm x 18cm"));
+    // Tutorial 7 - Activity 4 (Task 15): constructor injection, no @Autowired needed (one constructor).
+    // Tutorial 7 - Activity 4 (Task 17): experiment - temporarily change the parameter type to
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
     }
 
-    // Tutorial 3 - Activity 1 (Task 4): getAllProducts and addProduct
+    // Tutorial 7 - Activity 4 (Task 16)
     public List<Product> getAllProducts() {
-        return products;
+        return repository.findAll();
     }
 
     public Product addProduct(Product product) {
-        product.setId(nextId++);
-        products.add(product);
-        return product;
+        // save() assigns the id if it is missing
+        return repository.save(product);
     }
 
-    // Tutorial 3 - Activity 3 (Task 8)
-    public Optional<Product> getProductById(Long id) {
-        return products.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
+    // Tutorial 7 - Activity 4 (Task 16)
+    public Product getProductById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
-    // Tutorial 3 - Activity 4 (Task 12)
     public void deleteProduct(Long id) {
-        products.removeIf(p -> p.getId().equals(id));
+        getProductById(id);
+        repository.delete(id);
     }
 
-    // Tutorial 3 - Activity 5 (Task 16)
+    // Business rule (a search) stays in the service; only storage moved.
     public List<Product> findByName(String name) {
-        return products.stream()
+        return repository.findAll().stream()
                 .filter(p -> p.getName().contains(name))
                 .toList();
     }
+
     // Tutorial 5 - Activity 5 (Task 17)
     public List<String> getAllSummaries() {
         List<String> summaries = new ArrayList<>();
-        for (Product p : products) {
+        for (Product p : repository.findAll()) {
             summaries.add(p.getSummary());
-            
+
             if (p instanceof Discountable d) {
                 d.applyDiscount(0.10);
             }
-
         }
         return summaries;
     }
-
 }
