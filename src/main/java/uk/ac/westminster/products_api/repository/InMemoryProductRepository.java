@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 // Tutorial 7 - Activity 3 (Task 10)
+// Tutorial 7 - Activity 5 (Task 20): to demo the ambiguity error, add a second @Repository class
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
 
