@@ -9,8 +9,12 @@ import java.util.List;
 public class Productcontroller {
 
     // Tutorial 3 - Activity 2
-    @Autowired
     private ProductService productService;
+
+    // Tutorial 7 - Activity 1 (Task 4)
+    public Productcontroller(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/products")
     public List<Product> getAllProducts() {
