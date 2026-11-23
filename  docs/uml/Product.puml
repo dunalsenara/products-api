@@ -1,43 +1,42 @@
 @startuml
 
-' Tutorial 3 - Activity 6 (Task 19): Product, ProductService and ProductController boxes
-' (name / attributes / methods). Collection shown as products : List<Product>.
-class Product {
-  - id : Long
-  - name : String
-  - price : double
-  + getId() : Long
-  + getName() : String
-  + getPrice() : double
-  + setId(id : Long) : void
-  + setName(name : String) : void
-  + setPrice(price : double) : void
+' Tutorial 7 - Activity 6 (Task 21): repository layer added to the class diagram.
+class Productcontroller {
+  - productService : ProductService
+  + getAllProducts() : List<Product>
+  + getProductById(id : Long) : Product
+  + addProduct(product : DigitalProduct) : Product
+  + deleteProduct(id : Long) : void
+  + search(name : String) : List<Product>
 }
 
 class ProductService {
-  - products : List<Product>
-  - nextId : Long
+  - repository : ProductRepository
   + getAllProducts() : List<Product>
-  + getProductById(id : Long) : Optional<Product>
+  + getProductById(id : Long) : Product
   + addProduct(product : Product) : Product
   + deleteProduct(id : Long) : void
   + findByName(name : String) : List<Product>
 }
 
-class ProductController {
-  - productService : ProductService
-  + getAllProducts() : List<Product>
-  + getProductById(id : Long) : Product
-  + addProduct(product : Product) : Product
-  + deleteProduct(id : Long) : void
-  + search(name : String) : List<Product>
+interface ProductRepository {
+  + findAll() : List<Product>
+  + findById(id : Long) : Optional<Product>
+  + save(product : Product) : Product
+  + delete(id : Long) : void
 }
 
-' Tutorial 3 - Activity 6 (Task 20): arrows - both leave the controller, none point back.
-' ..> is a dependency: DASHED line, open arrow
-ProductController ..> ProductService
+class InMemoryProductRepository {
+  - store : Map<Long, Product>
+  - nextId : Long
+}
 
-' --> is an association: SOLID line
-ProductService --> Product
+' <|.. realisation (implements): DASHED line with hollow triangle
+ProductRepository <|.. InMemoryProductRepository
+
+' ..> dependency (uses): DOTTED line with open arrowhead.
+' The service arrow points at the INTERFACE, not the implementation.
+Productcontroller ..> ProductService
+ProductService ..> ProductRepository
 
 @enduml
